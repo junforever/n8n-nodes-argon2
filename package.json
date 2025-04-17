@@ -1,0 +1,38 @@
+{
+  "name": "n8n-nodes-argon2",
+  "version": "1.0.0",
+  "description": "n8n community node for Argon2 hashing and verification.",
+  "author": "junforever",
+  "license": "MIT",
+  "main": "dist/nodes/Argon2/Argon2.node.js",
+  "types": "dist/nodes/Argon2/Argon2.node.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "n8n",
+    "n8n-community-node",
+    "argon2",
+    "hash",
+    "encryption"
+  ],
+  "dependencies": {
+    "argon2": "^0.31.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "n8n": {
+    "credentials": [],
+    "nodes": [
+      "dist/nodes/Argon2/Argon2.node.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuusuario/n8n-nodes-argon2.git"
+  }
+}
