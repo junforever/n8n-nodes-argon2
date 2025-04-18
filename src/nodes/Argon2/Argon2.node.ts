@@ -16,7 +16,7 @@ export class Argon2 implements INodeType {
 		},
 		// Forzar tipado para máxima compatibilidad con futuras versiones de n8n
 		inputs: ['main'] as unknown as any,
-		outputs: ['main'] as unknown as any,
+		outputs: ['true', 'false'] as unknown as any,
 		credentials: [],
 		properties: [
 			{
@@ -61,7 +61,8 @@ export class Argon2 implements INodeType {
 
 	async execute(this: IExecuteFunctions) {
 		const items = this.getInputData();
-		const returnData: INodeExecutionData[] = [];
+		// Para dos salidas: true (0), false (1)
+		const outputData: INodeExecutionData[][] = [[], []];
 
 		for (let i = 0; i < items.length; i++) {
 			const operation = this.getNodeParameter('operation', i) as string;
@@ -70,7 +71,8 @@ export class Argon2 implements INodeType {
 			if (operation === 'encrypt') {
 				try {
 					const hash = await argon2.hash(text, { type: argon2.argon2id });
-					returnData.push({ json: { hash } });
+					// Por defecto, salida 'true' para encrypt
+					outputData[0].push({ json: { hash } });
 				} catch (error) {
 					throw new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
 				}
@@ -78,15 +80,24 @@ export class Argon2 implements INodeType {
 				const hash = this.getNodeParameter('hash', i) as string;
 				try {
 					const match = await argon2.verify(hash, text);
-					returnData.push({ json: { match } });
+					if (match) {
+						outputData[0].push({ json: { match: true } }); // salida 'true'
+					} else {
+						outputData[1].push({ json: { match: false } }); // salida 'false'
+					}
 				} catch (error) {
-					throw new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
+					// En caso de error, salida 'false'
+					let errorMessage = 'Unknown error';
+					if (error instanceof Error) {
+						errorMessage = error.message;
+					}
+					outputData[1].push({ json: { match: false, error: errorMessage } });
 				}
 			} else {
 				throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`, { itemIndex: i });
 			}
 		}
 
-		return this.prepareOutputData(returnData);
+		return outputData;
 	}
 }

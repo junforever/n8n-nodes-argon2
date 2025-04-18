@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-argon2",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "n8n community node for Argon2 hashing and verification.",
   "author": "junforever",
   "license": "MIT",
@@ -23,6 +23,8 @@
     "argon2": "^0.31.2"
   },
   "devDependencies": {
+    "@types/node": "^22.14.1",
+    "n8n-workflow": "^1.82.0",
     "typescript": "^5.0.0"
   },
   "n8n": {
