@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-argon2",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "n8n community node for Argon2 hashing and verification.",
   "author": "junforever",
   "license": "MIT",
@@ -30,7 +30,8 @@
   "n8n": {
     "credentials": [],
     "nodes": [
-      "dist/nodes/Argon2/Argon2.node.js"
+      "dist/nodes/Argon2/Argon2Encrypt.node.js",
+      "dist/nodes/Argon2/Argon2Verify.node.js"
     ]
   },
   "repository": {
