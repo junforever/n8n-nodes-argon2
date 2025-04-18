@@ -17,7 +17,7 @@ export class Argon2Encrypt implements INodeType {
     description: 'Encrypt (hash) text using Argon2',
     defaults: {
       name: 'Argon2 Encrypt',
-      color: '#1E3050',
+      color: '#00AAFF',
     },
     inputs: ['main'] as unknown as any,
     outputs: ['main'] as unknown as any,

@@ -10,7 +10,7 @@ export class Argon2Verify implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Argon2 Verify',
     name: 'argon2Verify',
-    icon: 'fa:lock-open',
+    icon: 'fa:lock',
     group: ['flow'],
     version: 1,
     description: 'Verify text against Argon2 hash',
@@ -19,7 +19,7 @@ export class Argon2Verify implements INodeType {
       color: '#1E3050',
     },
     inputs: ['main'] as unknown as any,
-    outputs: ['true', 'false'] as unknown as any,
+    outputs: ['main', 'main'] as unknown as any,
     outputNames: ['true', 'false'],
     credentials: [],
     properties: [
