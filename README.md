@@ -1,14 +1,24 @@
 # n8n-nodes-argon2
 
-A [n8n](https://n8n.io) community node for Argon2 hashing and verification.  
-Easily hash and verify strings using the Argon2id algorithm in your workflows.
+A [n8n](https://n8n.io) community node package for Argon2 hashing and verification.
+
+Now includes **two separate nodes** for better workflow clarity:
+- **Argon2 Encrypt**: Hash (encrypt) a string using Argon2id.
+- **Argon2 Verify**: Verify a string against an Argon2 hash, with two outputs: **true** and **false**.
 
 ---
 
 ## Features
 
-- **Encrypt:** Hash a plain text string using Argon2id.
-- **Verify:** Check if a plain text string matches a given Argon2 hash.
+- **Argon2 Encrypt Node**
+  - Input: Plain text (`Text`)
+  - Output: `{ "hash": "..." }` (single output)
+
+- **Argon2 Verify Node**
+  - Inputs: `Text` and `Hash`
+  - Output branches:
+    - **true**: If the verification is successful (`{ "match": true }`)
+    - **false**: If the verification fails or errors (`{ "match": false }` or `{ "match": false, "error": "..." }`)
 
 ---
 
@@ -30,17 +40,18 @@ npm install n8n-nodes-argon2
 
 ## Usage
 
-Add the **Argon2** node to your workflow and select the desired operation:
-
-- **Encrypt:**  
-  Provide the `Text` to hash. The output will be sent by the **true** output and will contain the Argon2 hash:
-
+### Argon2 Encrypt
+- Add the **Argon2 Encrypt** node to your workflow.
+- Provide the `Text` to hash.
+- The output will be:
   ```json
   { "hash": "$argon2id$..." }
   ```
 
-- **Verify:**  
-  Provide the `Text` and the `Hash` to check. The node will route the result:
+### Argon2 Verify
+- Add the **Argon2 Verify** node to your workflow.
+- Provide the `Text` and the `Hash` to check.
+- The node will route the result:
   - If the verification is **successful**, the output will be sent by the **true** output:
     ```json
     { "match": true }
@@ -58,7 +69,7 @@ Add the **Argon2** node to your workflow and select the desired operation:
 **Encrypt**
 
 - Input: `mySecretPassword`
-- Output (true output):
+- Output:
   ```json
   { "hash": "$argon2id$v=19$m=4096,t=3,p=1$..." }
   ```
@@ -66,12 +77,12 @@ Add the **Argon2** node to your workflow and select the desired operation:
 **Verify**
 
 - Input: `mySecretPassword`, `$argon2id$v=19$m=4096,t=3,p=1$...`
-- Output (true output):
+- Output (**true** branch):
   ```json
   { "match": true }
   ```
 - Input: `wrongPassword`, `$argon2id$v=19$m=4096,t=3,p=1$...`
-- Output (false output):
+- Output (**false** branch):
   ```json
   { "match": false }
   ```
@@ -89,7 +100,7 @@ Add the **Argon2** node to your workflow and select the desired operation:
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!  
+Contributions, issues and feature requests are welcome!
 Feel free to open an issue or submit a pull request.
 
 ---
